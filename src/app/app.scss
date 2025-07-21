@@ -1,0 +1,45 @@
+@use './_variables.scss' as *;
+
+:host {
+  display: block;
+  background-color: $color-amarillo-claro;
+  color: $color-rojo-principal;
+  font-family: $font-family-base;
+  min-height: 100vh;
+}
+
+.main-header {
+  background: linear-gradient(135deg, $color-gradiente-1, $color-gradiente-2);
+  color: $color-blanco;
+  padding: 3rem 1rem;
+  text-align: center;
+  box-shadow: 0 4px 10px $color-rojo-sombra;
+
+  h1 {
+    font-size: $font-size-h1;
+    margin-bottom: 0.5rem;
+    font-weight: $font-weight-bold;
+  }
+
+  p {
+    font-size: $font-size-h2;
+    color: $color-amarillo-fuerte;
+    margin-bottom: 1.5rem;
+  }
+
+  small.disclaimer {
+    display: block;
+    font-size: $font-size-p;
+    color: $color-amarillo-claro;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: $line-height-base;
+    padding: 0 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .highlight {
+    font-weight: $font-weight-bold;
+    color: $color-amarillo-fuerte;
+  }
+}
