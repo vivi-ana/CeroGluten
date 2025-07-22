@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { Local } from './local.model';
 import { FormsModule } from '@angular/forms';
 import { LocalService } from './local.service';
+import { Observable, of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-locals',
@@ -16,31 +18,47 @@ export class Locals implements OnInit {
   categoriaFiltro: 'comida' | 'insumos' | null = null;
   locales: Local[] = [];
 
+  locales$: Observable<Local[]> = of([]);
+
   loading = true;
+  errorMessage: string | null = null;
 
   constructor(private localService: LocalService) { }
 
-  ngOnInit(): void {
+    ngOnInit(): void {
+    this.loadLocals();
+  }
+
+  loadLocals() {
     this.loading = true;
-    this.localService.getLocals().subscribe((data) => {
-      this.locales = data;
-      this.loading = false;
-    });
+    this.errorMessage = null;
+
+    this.locales$ = this.localService.getLocals().pipe(
+      tap(() => {
+        this.loading = false;
+      }),
+      catchError(err => {
+        console.error('Error al obtener locales:', err);
+        this.loading = false;
+        this.errorMessage = 'No se pudieron cargar los locales. Intenta más tarde.';
+        return of([]);
+      })
+    );
   }
 
   encodeQuery(query: string): string {
     return encodeURIComponent(query);
   }
 
-  get localesFiltrados(): Local[] {
-    return this.locales
+  filtrarYOrdenar(locales: Local[]): Local[] {
+    return locales
       .map(local => ({
         local,
         score: this.getFiltroScore(local)
       }))
       .sort((a, b) => {
         if (b.score !== a.score) return b.score - a.score;
-        return a.local.name.localeCompare(b.local.name);
+        return a.local.name.localeCompare(b.local.name, 'es', { sensitivity: 'base' });
       })
       .map(item => item.local);
   }

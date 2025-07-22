@@ -195,6 +195,24 @@
   animation: spin 0.8s linear infinite;
 }
 
+.error {
+  font-size: $font-size-base;
+  color: $color-rojo-principal;
+  font-weight: $font-weight-semibold;
+  padding: 1rem;
+  background-color: $color-fondo-suave;
+  border: 2px solid $color-rojo-principal;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px $color-rojo-sombra;
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.error.no-locals {
+  font-style: italic;
+  color: $color-texto-principal;
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
