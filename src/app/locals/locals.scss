@@ -38,36 +38,9 @@
     margin: 0.5rem 0;
   }
 
-  .address {
-    color: $color-rojo-principal;
-    margin-bottom: 0.5rem;
-  }
-
   &:hover {
     transform: scale(1.02);
     border-color: $color-rojo-principal;
-  }
-
-  a.whatsapp-link {
-    text-decoration: none;
-    color: $color-rojo-principal;
-    font-weight: $font-weight-semibold;
-
-    &:hover {
-      text-decoration: underline;
-      color: $color-rojo-hover;
-    }
-  }
-
-  a.address-link {
-    text-decoration: none;
-    color: $color-rojo-principal;
-    font-weight: $font-weight-semibold;
-
-    &:hover {
-      text-decoration: underline;
-      color: $color-rojo-principal;
-    }
   }
 
   .card-content {
@@ -210,11 +183,15 @@
   }
 
   @media (max-width: 730px) {
-    flex-direction: column;
     align-items: stretch;
 
     label {
       width: 100%;
+    }
+
+    .search-container {
+      width: 100%;
+      max-width: 100%;
     }
   }
 }
