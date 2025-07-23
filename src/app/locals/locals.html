@@ -1,7 +1,11 @@
 <div class="filtros">
+  <div class="search-container">
+    <label>Buscar local:</label>
+    <input type="text" placeholder="Ingrese el nombre" (input)="onSearchTermChange($event)" class="find" />
+  </div>
   <label>
     Tipo:
-    <select [(ngModel)]="tipoFiltro">
+    <select [ngModel]="null" (ngModelChange)="setTipoFiltro($event)">
       <option [ngValue]="null">Todos</option>
       <option value="solo sin gluten">Solo sin gluten</option>
       <option value="mixto">Mixto</option>
@@ -10,7 +14,7 @@
 
   <label>
     Categoría:
-    <select [(ngModel)]="categoriaFiltro">
+    <select [ngModel]="null" (ngModelChange)="setCategoriaFiltro($event)">
       <option [ngValue]="null">Todas</option>
       <option value="comida">Locales de comida</option>
       <option value="insumos">Locales de insumos</option>
@@ -31,7 +35,7 @@
   </div>
   <div *ngIf="!loading && !errorMessage && locales.length > 0">
     <div class="cards-grid">
-      <div class="card" *ngFor="let local of filtrarYOrdenar(locales)">
+      <div class="card" *ngFor="let local of locales">
 
         <!-- Contenido superior -->
         <div class="card-content">

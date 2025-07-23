@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Local } from './local.model';
 import { FormsModule } from '@angular/forms';
+import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
+import { Local } from './local.model';
 import { LocalService } from './local.service';
-import { Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-locals',
@@ -14,9 +14,11 @@ import { catchError, tap } from 'rxjs/operators';
   styleUrls: ['./locals.scss']
 })
 export class Locals implements OnInit {
-  tipoFiltro: 'solo sin gluten' | 'mixto' | null = null;
-  categoriaFiltro: 'comida' | 'insumos' | null = null;
-  locales: Local[] = [];
+  private tipoFiltro$ = new BehaviorSubject<'solo sin gluten' | 'mixto' | null>(null);
+  private categoriaFiltro$ = new BehaviorSubject<'comida' | 'insumos' | null>(null);
+  private searchTerm$ = new BehaviorSubject<string>('');
+
+  private localesOriginales$: Observable<Local[]> = of([]);
 
   locales$: Observable<Local[]> = of([]);
 
@@ -25,7 +27,7 @@ export class Locals implements OnInit {
 
   constructor(private localService: LocalService) { }
 
-    ngOnInit(): void {
+  ngOnInit(): void {
     this.loadLocals();
   }
 
@@ -33,10 +35,8 @@ export class Locals implements OnInit {
     this.loading = true;
     this.errorMessage = null;
 
-    this.locales$ = this.localService.getLocals().pipe(
-      tap(() => {
-        this.loading = false;
-      }),
+    this.localesOriginales$ = this.localService.getLocals().pipe(
+      tap(() => (this.loading = false)),
       catchError(err => {
         console.error('Error al obtener locales:', err);
         this.loading = false;
@@ -44,30 +44,63 @@ export class Locals implements OnInit {
         return of([]);
       })
     );
+
+    this.locales$ = combineLatest([
+      this.localesOriginales$,
+      this.tipoFiltro$,
+      this.categoriaFiltro$,
+      this.searchTerm$
+    ]).pipe(
+      map(([locales, tipoFiltro, categoriaFiltro, searchTerm]) => {
+        const filtradosYOrdenados = this.filtrarYOrdenarLocales(locales, tipoFiltro, categoriaFiltro);
+
+        if (!searchTerm.trim()) {
+          return filtradosYOrdenados;
+        }
+
+        const searchTermLower = searchTerm.toLowerCase();
+
+        return filtradosYOrdenados.filter(local =>
+          local.name.toLowerCase().startsWith(searchTermLower)
+        );
+      })
+    );
   }
+
+  private filtrarYOrdenarLocales(
+    locales: Local[],
+    tipoFiltro: string | null,
+    categoriaFiltro: string | null
+  ): Local[] {
+    if (!tipoFiltro && !categoriaFiltro) {
+      return locales;
+    }
+
+    return locales
+      .filter(local => {
+        const tipoOk = !tipoFiltro || local.type === tipoFiltro;
+        const categoriaOk = !categoriaFiltro || local.category === categoriaFiltro;
+        return tipoOk && categoriaOk;
+      })
+  }
+
+
+  setTipoFiltro(valor: 'solo sin gluten' | 'mixto' | null) {
+    this.tipoFiltro$.next(valor);
+  }
+
+  setCategoriaFiltro(valor: 'comida' | 'insumos' | null) {
+    this.categoriaFiltro$.next(valor);
+  }
+
+  onSearchTermChange(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.searchTerm$.next(value);
+  }
+
 
   encodeQuery(query: string): string {
     return encodeURIComponent(query);
-  }
-
-  filtrarYOrdenar(locales: Local[]): Local[] {
-    return locales
-      .map(local => ({
-        local,
-        score: this.getFiltroScore(local)
-      }))
-      .sort((a, b) => {
-        if (b.score !== a.score) return b.score - a.score;
-        return a.local.name.localeCompare(b.local.name, 'es', { sensitivity: 'base' });
-      })
-      .map(item => item.local);
-  }
-
-  private getFiltroScore(local: Local): number {
-    let score = 0;
-    if (this.tipoFiltro && local.type === this.tipoFiltro) score += 1;
-    if (this.categoriaFiltro && local.category === this.categoriaFiltro) score += 1;
-    return score;
   }
 
   normalizeLocalidad(localidad: string): string {

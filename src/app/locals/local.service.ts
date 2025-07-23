@@ -30,7 +30,7 @@ export class LocalService {
         if (invalidCount > 0) {
           console.warn(`${invalidCount} documento(s) descartados por datos incompletos.`);
         }
-        return validItems;
+         return validItems.sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' }));
       }),
       catchError((error) => {
         console.error('Error al obtener los locales desde Firestore:', error);
