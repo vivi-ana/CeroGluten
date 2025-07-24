@@ -1,0 +1,15 @@
+<nav class="main-nav">
+    <a (click)="scrollTo('inicio')" class="logo-link">
+        <img src="logo.png" alt="Cero Gluten logo" class="logo-img" (error)="hideLogo = true" [hidden]="hideLogo" />
+    </a>
+
+    <button class="menu-toggle" (click)="toggleMenu()" aria-label="Toggle menu">
+        &#9776;
+    </button>
+
+    <div class="nav-container" [class.active]="menuOpen">
+        <a (click)="scrollTo('inicio')">Inicio</a>
+        <a (click)="scrollTo('locales')">Locales</a>
+        <a (click)="scrollTo('contacto')">Contacto</a>
+    </div>
+</nav>

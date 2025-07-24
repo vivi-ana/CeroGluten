@@ -1,0 +1,82 @@
+@use '../_variables.scss' as *;
+
+.main-nav {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    background-color: $color-amarillo-claro;
+    padding: 1rem;
+    position: sticky;
+    top: 0;
+    cursor: pointer;
+    z-index: 999;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-bottom: 2px solid $color-rojo-hover;
+
+
+    .logo-img {
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+        display: block;
+    }
+
+    .menu-toggle {
+        display: none;
+        font-size: 2rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: $color-rojo-principal;
+    }
+
+    .nav-container {
+        display: flex;
+        gap: 3rem;
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+
+        a {
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+            color: $color-rojo-principal;
+
+            &:hover {
+                color: $color-amarillo-fuerte;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .menu-toggle {
+            display: block;
+            margin-left: auto;
+        }
+
+        .nav-container {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: $color-amarillo-claro;
+            padding: 1rem;
+            gap: 1rem;
+
+
+            &.active {
+                display: flex;
+                border-bottom: 2px solid $color-rojo-principal;
+            }
+
+            a {
+                padding: 0.5rem 1rem;
+                width: 100%;
+                box-sizing: border-box;
+            }
+        }
+    }
+}

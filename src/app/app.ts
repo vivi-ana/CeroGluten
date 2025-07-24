@@ -1,11 +1,12 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Locals } from './locals/locals';
+import { Navbar } from './navbar/navbar';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, Locals],
+  imports: [RouterOutlet, Locals, Navbar],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
