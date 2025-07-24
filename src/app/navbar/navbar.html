@@ -1,4 +1,4 @@
-<nav class="main-nav">
+<nav class="main-nav" [class.border-animated]="scrolled">
     <a (click)="scrollTo('inicio')" class="logo-link">
         <img src="logo.png" alt="Cero Gluten logo" class="logo-img" (error)="hideLogo = true" [hidden]="hideLogo" />
     </a>
@@ -8,8 +8,8 @@
     </button>
 
     <div class="nav-container" [class.active]="menuOpen">
-        <a (click)="scrollTo('inicio')">Inicio</a>
-        <a (click)="scrollTo('locales')">Locales</a>
-        <a (click)="scrollTo('contacto')">Contacto</a>
+        <a (click)="scrollTo('inicio'); $event.preventDefault()" [class.active]="selectedSection === 'inicio'">Inicio</a>
+        <a (click)="scrollTo('locales'); $event.preventDefault()" [class.active]="selectedSection === 'locales'">Locales</a>
+        <a (click)="scrollTo('contacto'); $event.preventDefault()" [class.active]="selectedSection === 'contacto'">Contacto</a>
     </div>
 </nav>
