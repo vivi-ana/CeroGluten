@@ -41,7 +41,7 @@
         <div class="card-content">
           <h2>{{ local.name }}</h2>
           <p class="description">{{ local.description }}</p>
-          <p><span class="data-label">Categoría: </span> <strong>{{ local.category }}</strong></p>
+          <p><span class="data-label">Categoría: </span> <strong>Local de {{ local.category }}</strong></p>
 
           <div *ngIf="local.address">
             <span class="data-label">
@@ -62,7 +62,7 @@
 
         <!-- Footer (redes y links) -->
         <div class="card-footer" *ngIf="local.socialNetworks?.length || local.whatsapp || local.address">
-                    <div class="tipo-box" [ngClass]="{
+          <div class="tipo-box" [ngClass]="{
     'sin-gluten': local.type === 'solo sin gluten',
     'mixto': local.type === 'mixto'
   }">
