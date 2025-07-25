@@ -40,25 +40,34 @@
         <!-- Contenido superior -->
         <div class="card-content">
           <h2>{{ local.name }}</h2>
-          <p>{{ local.description }}</p>
-          <p>Tipo: <strong>{{ local.type }}</strong></p>
-          <p>Categoría: <strong>{{ local.category }}</strong></p>
+          <p class="description">{{ local.description }}</p>
+          <p><span class="data-label">Categoría: </span> <strong>{{ local.category }}</strong></p>
 
           <div *ngIf="local.address">
-            Dirección: <strong>{{ local.address }}</strong>
+            <span class="data-label">
+              Dirección: </span><strong>{{ local.address }}</strong>
           </div>
 
           <p *ngIf="local.whatsapp">
-            WhatsApp: <strong>{{ local.whatsapp }}</strong>
+            <span class="data-label">
+              WhatsApp: </span><strong>{{ local.whatsapp }}</strong>
           </p>
 
           <p *ngIf="local.phone">
-            Teléfono: <strong>{{ local.phone }}</strong>
+            <span class="data-label">
+              Teléfono: </span><strong>{{ local.phone }}</strong>
           </p>
+
         </div>
 
         <!-- Footer (redes y links) -->
         <div class="card-footer" *ngIf="local.socialNetworks?.length || local.whatsapp || local.address">
+                    <div class="tipo-box" [ngClass]="{
+    'sin-gluten': local.type === 'solo sin gluten',
+    'mixto': local.type === 'mixto'
+  }">
+            {{ local.type }}
+          </div>
           <hr class="divider" />
 
           <div class="redes">
@@ -75,7 +84,7 @@
             </a>
 
             <!-- WhatsApp -->
-            <a *ngIf="local.whatsapp" class="red-link" [href]="'https://wa.me/' + local.whatsapp" target="_blank"
+            <a *ngIf="local.whatsapp" class="red-link" [href]="'https://wa.me/+549' + local.whatsapp" target="_blank"
               rel="noopener noreferrer" title="Enviar WhatsApp">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24" height="24" fill="currentColor">
                 <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222

@@ -14,7 +14,7 @@
   background-color: $color-blanco;
   border: 2px solid $color-amarillo-fuerte;
   padding: 1.5rem;
-  border-radius: 8px;
+  border-radius: 20px;
   box-shadow: 0 4px 8px $color-rojo-sombra;
   transition: transform 0.2s ease;
   position: relative;
@@ -32,6 +32,18 @@
     margin: 0;
     color: $color-rojo-principal;
     font-size: $font-size-h2;
+    text-align: center;
+  }
+
+  .description {
+    text-align: center;
+    color: $color-rojo-hover;
+    font-weight: $font-weight-semibold;
+    margin-bottom: 1rem;
+  }
+
+  .data-label {
+    color: $color-rojo-hover;
   }
 
   p {
@@ -228,6 +240,26 @@
 .error.no-locals {
   font-style: italic;
   color: $color-texto-principal;
+}
+
+.tipo-box {
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-weight: bold;
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.sin-gluten {
+  background-color: $color-fondo-suave;
+  color: $color-rojo-hover;
+}
+
+.mixto {
+  background-color: $color-rojo-sombra;
+  color: $color-rojo-hover;
 }
 
 @keyframes spin {
