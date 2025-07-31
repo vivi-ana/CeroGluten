@@ -5,11 +5,14 @@ import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Local } from './local.model';
 import { LocalService } from './local.service';
+import { Disclaimer } from './components/disclaimer/disclaimer';
+import { Filters } from './components/filters/filters';
+import { Cards } from './components/cards/cards';
 
 @Component({
   selector: 'app-locals',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, Disclaimer, Filters, Cards],
   templateUrl: './locals.html',
   styleUrls: ['./locals.scss']
 })
@@ -54,14 +57,14 @@ export class Locals implements OnInit {
       map(([locales, tipoFiltro, categoriaFiltro, searchTerm]) => {
         const filtradosYOrdenados = this.filtrarYOrdenarLocales(locales, tipoFiltro, categoriaFiltro);
 
-        if (!searchTerm.trim()) {
+        if (!searchTerm.trim() || searchTerm.length < 3) {
           return filtradosYOrdenados;
         }
 
         const searchTermLower = searchTerm.toLowerCase();
 
         return filtradosYOrdenados.filter(local =>
-          local.name.toLowerCase().startsWith(searchTermLower)
+          local.name.toLowerCase().includes(searchTermLower)
         );
       })
     );
@@ -84,7 +87,6 @@ export class Locals implements OnInit {
       })
   }
 
-
   setTipoFiltro(valor: 'solo sin gluten' | 'mixto' | null) {
     this.tipoFiltro$.next(valor);
   }
@@ -96,14 +98,5 @@ export class Locals implements OnInit {
   onSearchTermChange(event: Event) {
     const value = (event.target as HTMLInputElement).value;
     this.searchTerm$.next(value);
-  }
-
-
-  encodeQuery(query: string): string {
-    return encodeURIComponent(query);
-  }
-
-  normalizeLocalidad(localidad: string): string {
-    return localidad.toLowerCase() === 'formosa capital' ? 'Formosa' : localidad;
   }
 }

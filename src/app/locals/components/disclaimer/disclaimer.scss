@@ -1,0 +1,57 @@
+@use '../../../variables' as *;
+@use 'sass:color';
+
+.disclaimer-box {
+    display: inline-flex;
+    align-items: center;
+    max-width: 600px;
+    margin: 0 auto 1.5rem auto;
+    padding: 0.75rem 1rem;
+    background-color: $color-fondo-suave;
+    border-radius: 8px;
+    border: 1px solid color.adjust($color-rojo-principal, $lightness: 40%);
+    color: $color-rojo-principal;
+    font-size: 0.9rem;
+    font-weight: 500;
+    box-shadow: 0 2px 6px $color-rojo-sombra;
+
+    .icon {
+        font-size: 1.4rem;
+        margin-right: 0.5rem;
+        user-select: none;
+        color: $color-rojo-principal;
+    }
+
+    small {
+        display: block;
+        font-size: $font-size-p;
+        color: $color-texto-secundario;
+        max-width: 700px;
+        margin: 0 auto;
+        line-height: $line-height-base;
+        padding: 0 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .highlight {
+        font-weight: $font-weight-bold;
+        color: $color-rojo-principal;
+    }
+}
+
+.disclaimer-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.disclaimer-body {
+    text-align: justify;
+    line-height: 1.6;
+    margin-top: 0.5rem;
+
+    p {
+        margin-bottom: 0.75rem;
+        text-indent: 1.5em;
+    }
+}

@@ -1,0 +1,23 @@
+<div class="filtros">
+    <div class="search-container">
+        <label>Buscar local:</label>
+        <input type="text" placeholder="Ingrese el nombre" (input)="onSearchChange($event)" class="find" />
+    </div>
+    <label>
+        Tipo:
+        <select [ngModel]="null" (ngModelChange)="onTipoChange($event)">
+            <option [ngValue]="null">Todos</option>
+            <option value="solo sin gluten">Solo sin gluten</option>
+            <option value="mixto">Mixto</option>
+        </select>
+    </label>
+
+    <label>
+        Categoría:
+        <select [ngModel]="null" (ngModelChange)="onCategoriaChange($event)">
+            <option [ngValue]="null">Todas</option>
+            <option value="comida">Venta de comida</option>
+            <option value="insumos">Venta de insumos</option>
+        </select>
+    </label>
+</div>

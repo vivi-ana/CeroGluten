@@ -1,0 +1,112 @@
+@use '../../../variables' as *;
+@use 'sass:color';
+
+.card {
+    background-color: $color-blanco;
+    border: 2px solid $color-amarillo-fuerte;
+    padding: 1.5rem 1.5rem 2rem;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px $color-rojo-sombra;
+    transition: transform 0.2s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 350px;
+
+    .divider {
+        border: none;
+        border-top: 1px solid $color-amarillo-fuerte;
+        margin: 1.5rem 0;
+    }
+
+    h2 {
+        margin: 0;
+        color: $color-rojo-principal;
+        font-size: $font-size-h2;
+        text-align: center;
+        white-space: normal;
+        word-wrap: break-word;
+    }
+
+    .description {
+        text-align: center;
+        color: $color-rojo-hover;
+        font-weight: $font-weight-semibold;
+        margin-bottom: 1rem;
+    }
+
+    .data-label {
+        color: $color-rojo-hover;
+    }
+
+    p {
+        margin: 0.5rem 0;
+    }
+
+    &:hover {
+        transform: scale(1.02);
+        border-color: $color-rojo-principal;
+    }
+
+    .card-content {
+        flex-grow: 1;
+        min-height: 230px;
+    }
+}
+
+
+.redes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+
+    .red-link {
+        width: 44px;
+        height: 44px;
+        flex-basis: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: $color-blanco;
+        border: 2px solid $color-amarillo-fuerte;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+
+        svg {
+            width: 20px;
+            height: 20px;
+            fill: $color-rojo-principal;
+        }
+
+        &:hover {
+            background-color: $color-amarillo-fuerte;
+            transform: scale(1.05);
+
+            svg {
+                fill: $color-rojo-hover;
+            }
+        }
+    }
+}
+
+.tipo-box {
+    padding: 10px 12px;
+    border-radius: 12px;
+    font-weight: bold;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+.sin-gluten {
+    background-color: $color-fondo-suave;
+    color: $color-rojo-hover;
+}
+
+.mixto {
+    background-color: $color-rojo-sombra;
+    color: $color-rojo-hover;
+}
